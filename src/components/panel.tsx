@@ -1,4 +1,4 @@
-import { minimized, modifiedCount, panelPos, panelSize } from "../store";
+import { minimized, modifiedCount, panelOpen, panelPos, panelSize } from "../store";
 import { ColorList } from "./color-list";
 import { ColorPicker } from "./color-picker";
 import { ContrastChecker } from "./contrast-checker";
@@ -10,6 +10,8 @@ import { Toolbar } from "./toolbar";
 export function Panel() {
   const pos = panelPos.value;
   const size = panelSize.value;
+
+  if (!panelOpen.value) return null;
 
   if (minimized.value) {
     return (
