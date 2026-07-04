@@ -9,6 +9,7 @@ export function Toolbar() {
       <input
         class="search"
         type="search"
+        name="search"
         placeholder="Filter variables…"
         value={searchQuery.value}
         onInput={(e) => (searchQuery.value = (e.target as HTMLInputElement).value)}
