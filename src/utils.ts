@@ -27,6 +27,8 @@ useMode(modeHsl);
 const toOklch = useMode(modeOklch);
 const toHwb = useMode(modeHwb);
 
+export const POPUP_WIDTH = 240;
+export const POPUP_HEIGHT = 300;
 const FALLBACK_HEX = "#000000";
 const NON_COLOR_KEYWORDS = new Set(["inherit", "initial", "unset", "revert", "revert-layer", "currentcolor", "none"]);
 

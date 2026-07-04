@@ -7,6 +7,11 @@ import { toFormat, silentlyFail } from "./utils";
 const GROUP_PREFIXES = ["--color", "--bg", "--text", "--border", "--ring", "--shadow"];
 const OTHER_LABEL = "other";
 const STORAGE_KEY = "__colorlens_panel__";
+const PANEL_WIDTH = 340;
+const PANEL_HEIGHT = 480;
+const PANEL_X = 16;
+const PANEL_Y = 16;
+const TOAST_DURATION = 1600;
 
 let toastTimer: number | undefined;
 
@@ -75,7 +80,7 @@ export function resetAll() {
 export function showToast(message: string) {
   toast.value = message;
   clearTimeout(toastTimer);
-  toastTimer = window.setTimeout(() => (toast.value = null), 1600);
+  toastTimer = window.setTimeout(() => (toast.value = null), TOAST_DURATION);
 }
 
 export async function copyText(text: string, confirmation: string) {
@@ -107,8 +112,8 @@ export const minimized = signal(false);
 export const contrastOpen = signal(false);
 export const toast = signal<string | null>(null);
 export const activePicker = signal<{ name: string; x: number; y: number } | null>(null);
-export const panelPos = signal(saved.pos ?? { x: 16, y: 16 });
-export const panelSize = signal(saved.size ?? { w: 340, h: 480 });
+export const panelPos = signal(saved.pos ?? { x: PANEL_X, y: PANEL_Y });
+export const panelSize = signal(saved.size ?? { w: PANEL_WIDTH, h: PANEL_HEIGHT });
 
 export const groups = computed<Group[]>(() => {
   const byLabel = new Map<string, CSSColorVar[]>();

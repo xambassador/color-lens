@@ -1,7 +1,7 @@
 import { useEffect } from "preact/hooks";
 
-import { watchForChanges } from "./scanner";
-import { refreshColorVars } from "./store";
+import { watchForChanges } from "../scanner";
+import { refreshColorVars } from "../store";
 
 export function useScanner() {
   useEffect(() => {

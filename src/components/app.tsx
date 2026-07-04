@@ -1,4 +1,4 @@
-import { useScanner } from "../use-scanner";
+import { useScanner } from "../hooks/use-scanner";
 import { Panel } from "./panel";
 
 export function App() {
