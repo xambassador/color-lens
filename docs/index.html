@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="dark" />
+  <title>Color Lens</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="../sandbox.css" />
+</head>
+
+<body>
+  <main class="wrap">
+    <section class="hero stagger">
+      <h1><em>Tweak</em> every colors your page has</h1>
+      <p class="lede">
+        Color Lens scans this page for every CSS variable that holds a color, then lets you tweak, contrast-check, and
+        export the whole palette without a single reload.
+      </p>
+
+      <div class="spectrum" role="img" aria-label="The color variables exposed by this page">
+        <span class="spectrum__seg" style="background: var(--color-primary)" title="--color-primary"></span>
+        <span class="spectrum__seg" style="background: var(--color-violet)" title="--color-violet"></span>
+        <span class="spectrum__seg" style="background: var(--color-secondary)" title="--color-secondary"></span>
+        <span class="spectrum__seg" style="background: var(--color-cyan)" title="--color-cyan"></span>
+        <span class="spectrum__seg" style="background: var(--color-info)" title="--color-info"></span>
+        <span class="spectrum__seg" style="background: var(--color-success)" title="--color-success"></span>
+        <span class="spectrum__seg" style="background: var(--color-warning)" title="--color-warning"></span>
+        <span class="spectrum__seg" style="background: var(--color-accent)" title="--color-accent"></span>
+        <span class="spectrum__seg" style="background: var(--color-rose)" title="--color-rose"></span>
+        <span class="spectrum__seg" style="background: var(--color-danger)" title="--color-danger"></span>
+        <span class="spectrum__seg" style="background: var(--color-muted)" title="--color-muted"></span>
+        <span class="spectrum__seg" style="background: var(--color-link)" title="--color-link → --color-info"></span>
+      </div>
+    </section>
+
+    <div class="demo">
+      <form class="card panel" onsubmit="return false;">
+        <div class="panel__head">
+          <div>
+            <h2>Sign in to Acme</h2>
+            <p>Welcome back to Acme</p>
+          </div>
+        </div>
+
+        <label class="fieldset">
+          <span class="label">Email</span>
+          <input class="field" type="email" value="ada@acme.dev" autocomplete="email" />
+        </label>
+        <label class="fieldset">
+          <span class="label">Password</span>
+          <input class="field" type="password" value="supersecret" autocomplete="current-password" />
+        </label>
+
+        <div class="between">
+          <label class="check">
+            <input type="checkbox" checked />
+            <span>Remember me</span>
+          </label>
+          <a href="#">Forgot password?</a>
+        </div>
+
+        <button class="btn btn--primary btn--block" type="submit">Sign in</button>
+        <p class="form-foot">New to Acme? <a href="#">Create an account</a></p>
+      </form>
+
+      <div class="card panel">
+        <div class="panel__head between">
+          <div>
+            <h2>Notifications</h2>
+            <p>Choose what Acme sends you.</p>
+          </div>
+        </div>
+
+        <ul class="settings">
+          <li class="setting">
+            <div>
+              <div class="setting__name">Deploy alerts</div>
+              <div class="setting__desc">When a build ships to production</div>
+            </div>
+            <button class="switch is-on" role="switch" aria-checked="true" aria-label="Deploy alerts">
+              <span class="switch__dot"></span>
+            </button>
+          </li>
+          <li class="setting">
+            <div>
+              <div class="setting__name">Product updates</div>
+              <div class="setting__desc">New features and releases</div>
+            </div>
+            <button class="switch is-on" role="switch" aria-checked="true" aria-label="Product updates">
+              <span class="switch__dot"></span>
+            </button>
+          </li>
+          <li class="setting">
+            <div>
+              <div class="setting__name">Weekly digest</div>
+              <div class="setting__desc">A Monday summary of activity</div>
+            </div>
+            <button class="switch" role="switch" aria-checked="false" aria-label="Weekly digest">
+              <span class="switch__dot"></span>
+            </button>
+          </li>
+          <li class="setting">
+            <div>
+              <div class="setting__name">Security</div>
+              <div class="setting__desc">New sign-ins and password changes</div>
+            </div>
+            <button class="switch is-on" role="switch" aria-checked="true" aria-label="Security">
+              <span class="switch__dot"></span>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    document.querySelectorAll(".switch").forEach((sw) => {
+      sw.addEventListener("click", () => {
+        const on = sw.classList.toggle("is-on");
+        sw.setAttribute("aria-checked", String(on));
+      });
+    });
+  </script>
+
+  <script crossorigin="anonymous" src="https://unpkg.com/color-lens@latest/dist/color-lens.iife.js"></script>
+</body>
+
+</html>
