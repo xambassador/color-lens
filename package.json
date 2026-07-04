@@ -1,47 +1,68 @@
 {
   "name": "color-lens",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.0.0",
+  "description": "Inspect, edit, and export your page's CSS custom properties in real time. No build step, no browser extension, no page reloads.",
   "keywords": [
     "color",
     "css",
-    "devtool"
+    "css-variables",
+    "custom-properties",
+    "devtool",
+    "devtools"
   ],
-  "license": "ISC",
+  "homepage": "https://github.com/xambassador/color-lens#readme",
+  "bugs": {
+    "url": "https://github.com/xambassador/color-lens/issues"
+  },
+  "license": "MIT",
   "author": {
     "name": "Yash Ramoliya",
     "email": "yashramoliya12@gmail.com",
     "url": "https://www.yashramoliya.dev"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xambassador/color-lens.git"
+  },
+  "files": [
+    "dist"
+  ],
   "type": "module",
-  "main": "index.js",
+  "main": "./dist/color-lens.js",
+  "module": "./dist/color-lens.js",
+  "unpkg": "./dist/color-lens.iife.js",
+  "jsdelivr": "./dist/color-lens.iife.js",
+  "exports": {
+    ".": "./dist/color-lens.js",
+    "./iife": "./dist/color-lens.iife.js",
+    "./package.json": "./package.json"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
     "fmt": "oxfmt --write",
     "fmt:check": "oxfmt --check",
+    "prepublishOnly": "pnpm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "dependencies": {
-    "@preact/signals": "^2.9.2",
-    "culori": "^4.0.2",
-    "preact": "^10.29.3",
-    "vanilla-colorful": "^0.7.2"
   },
   "devDependencies": {
     "@preact/preset-vite": "^2.10.5",
+    "@preact/signals": "^2.9.2",
     "@types/culori": "^4.0.1",
+    "culori": "^4.0.2",
     "oxfmt": "^0.57.0",
+    "preact": "^10.29.3",
     "terser": "^5.48.0",
     "typescript": "^6.0.3",
+    "vanilla-colorful": "^0.7.2",
     "vite": "^8.1.3"
   },
   "devEngines": {
     "packageManager": {
       "name": "pnpm",
       "version": "^11.1.3",
-      "onFail": "download"
+      "onFail": "warn"
     }
   }
 }

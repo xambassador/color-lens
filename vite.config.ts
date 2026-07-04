@@ -7,7 +7,6 @@ export default defineConfig({
     lib: {
       entry: "src/index.ts",
       name: "colorlens",
-      fileName: "colorlens",
       formats: ["iife", "es"]
     },
     rollupOptions: {
