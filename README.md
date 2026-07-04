@@ -1,1 +1,3 @@
-# Color lens - Live CSS Color Variable Editor in a Single Script Tag
+# Color lens
+
+**Inspect, edit, and export your page's CSS custom variabled in real time. No build step, no browser extension, no page reloads.**

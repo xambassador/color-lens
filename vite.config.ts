@@ -6,16 +6,17 @@ export default defineConfig({
   build: {
     lib: {
       entry: "src/index.ts",
-      name: "color-lens",
-      fileName: "color-lens",
+      name: "colorlens",
+      fileName: "colorlens",
       formats: ["iife", "es"]
     },
     rollupOptions: {
-      output: { inlineDynamicImports: true }
+      output: { codeSplitting: false }
     },
     minify: "terser"
   },
   define: {
     "process.env.NODE_ENV": '"production"'
-  }
+  },
+  server: {}
 });
