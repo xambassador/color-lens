@@ -1,4 +1,4 @@
-import { useState } from "preact/hooks";
+import { useState, useEffect } from "preact/hooks";
 
 import { colorVars, contrastOpen } from "../store";
 import { contrastRatio, wcagLevel } from "../utils";
@@ -42,6 +42,11 @@ function Slot({
 }
 
 export function ContrastChecker() {
+  if (!contrastOpen.value) return null;
+  return <ContrastCheckerImpl />;
+}
+
+function ContrastCheckerImpl() {
   const names = [...colorVars.value.keys()];
   const [fg, setFg] = useState(names[0] ?? "");
   const [bg, setBg] = useState(names[1] ?? names[0] ?? "");
@@ -49,7 +54,6 @@ export function ContrastChecker() {
   const fgVar = colorVars.value.get(fg);
   const bgVar = colorVars.value.get(bg);
 
-  if (!contrastOpen.value) return null;
   if (!fgVar || !bgVar) {
     return <div class="empty">Need at least two color variables to compare.</div>;
   }
