@@ -1,6 +1,6 @@
 {
   "name": "color-lens",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Inspect, edit, and export your page's CSS custom properties in real time. No build step, no browser extension, no page reloads.",
   "keywords": [
     "color",
