@@ -1,12 +1,10 @@
 import { useState } from "preact/hooks";
 
 import { contrastOpen, groups, searchQuery } from "../store";
+import { CSSColorVar } from "../types";
 import { ColorItem } from "./color-item";
 
 export function ColorList() {
-  const [collapsed, setCollapsed] = useState<Record<string, boolean>>({});
-  const toggle = (label: string) => setCollapsed((c) => ({ ...c, [label]: !c[label] }));
-
   if (contrastOpen.value) return null;
 
   if (groups.value.length === 0) {
@@ -20,18 +18,26 @@ export function ColorList() {
   return (
     <div class="color-list">
       {groups.value.map((g) => (
-        <section key={g.label}>
-          <button class="group-header" onClick={() => toggle(g.label)}>
-            <span class={`chevron ${collapsed[g.label] ? "" : "open"}`}>▸</span>
-            <span class="group-label">{g.label}</span>
-            <span class="group-meta">
-              {g.modifiedCount > 0 && <em class="group-modified">{g.modifiedCount} modified</em>}
-              {g.vars.length}
-            </span>
-          </button>
-          {!collapsed[g.label] && g.vars.map((v) => <ColorItem key={v.name} v={v} />)}
-        </section>
+        <Group key={g.label} vars={g.vars} label={g.label} modifiedCount={g.modifiedCount} />
       ))}
     </div>
+  );
+}
+
+function Group({ vars, label, modifiedCount }: { label: string; modifiedCount: number; vars: CSSColorVar[] }) {
+  const [collapsed, setCollapsed] = useState(false);
+  const toggle = () => setCollapsed(!collapsed);
+  return (
+    <section>
+      <button class="group-header" onClick={toggle}>
+        <span class={`chevron ${collapsed ? "" : "open"}`}>▸</span>
+        <span class="group-label">{label}</span>
+        <span class="group-meta">
+          {modifiedCount > 0 && <em class="group-modified">{modifiedCount} modified</em>}
+          {vars.length}
+        </span>
+      </button>
+      {!collapsed && vars.map((v) => <ColorItem key={v.name} v={v} />)}
+    </section>
   );
 }

@@ -1,4 +1,4 @@
-import { colorVars, minimized, panelPos } from "../store";
+import { colorCount, minimized, panelPos } from "../store";
 import { clamp, trackPointer } from "../utils";
 
 export function PanelHeader() {
@@ -19,10 +19,14 @@ export function PanelHeader() {
     <header class="panel-header" onPointerDown={onDragStart}>
       <span class="pill-logo" />
       <span class="panel-title">color lens</span>
-      <span class="panel-count">{colorVars.value.size} vars</span>
+      <ColorCount />
       <button class="icon-btn" title="Minimize (Alt+C hides completely)" onClick={() => (minimized.value = true)}>
         &minus;
       </button>
     </header>
   );
+}
+
+function ColorCount() {
+  return <span class="panel-count">{colorCount.value} vars</span>;
 }

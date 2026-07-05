@@ -27,11 +27,14 @@ export function persistPanelState() {
   });
 }
 
-export const filteredVars = computed(() => {
-  const query = searchQuery.value.trim().toLowerCase();
-  const all = [...colorVars.value.values()];
-  return query ? all.filter((v) => v.name.toLowerCase().includes(query)) : all;
-});
+export const filteredVars = computed(
+  () => {
+    const query = searchQuery.value.trim().toLowerCase();
+    const all = [...colorVars.value.values()];
+    return query ? all.filter((v) => v.name.toLowerCase().includes(query)) : all;
+  },
+  { name: "filteredVars" }
+);
 
 export function refreshColorVars() {
   const scanned = scanColorVars();
@@ -115,27 +118,44 @@ export const activePicker = signal<{ name: string; x: number; y: number } | null
 export const panelPos = signal(saved.pos ?? { x: PANEL_X, y: PANEL_Y });
 export const panelSize = signal(saved.size ?? { w: PANEL_WIDTH, h: PANEL_HEIGHT });
 
-export const groups = computed<Group[]>(() => {
-  const byLabel = new Map<string, CSSColorVar[]>();
-  for (const v of filteredVars.value) {
-    const prefix = GROUP_PREFIXES.find((p) => v.name === p || v.name.startsWith(`${p}-`));
-    const label = prefix ? `${prefix}-*` : OTHER_LABEL;
-    const bucket = byLabel.get(label) ?? [];
-    bucket.push(v);
-    byLabel.set(label, bucket);
-  }
+colorVars.name = "colorVars";
+searchQuery.name = "searchQuery";
+format.name = "format";
+panelOpen.name = "panelOpen";
+minimized.name = "minimized";
+contrastOpen.name = "contrastOpen";
+toast.name = "toast";
+activePicker.name = "activePicker";
+panelPos.name = "panelPos";
+panelSize.name = "panelSize";
 
-  const order = [...GROUP_PREFIXES.map((p) => `${p}-*`), OTHER_LABEL];
-  return order
-    .filter((label) => byLabel.has(label))
-    .map((label) => {
-      const vars = byLabel.get(label)!;
-      return {
-        label,
-        vars,
-        modifiedCount: vars.filter((v) => v.modified).length
-      };
-    });
+export const groups = computed<Group[]>(
+  () => {
+    const byLabel = new Map<string, CSSColorVar[]>();
+    for (const v of filteredVars.value) {
+      const prefix = GROUP_PREFIXES.find((p) => v.name === p || v.name.startsWith(`${p}-`));
+      const label = prefix ? `${prefix}-*` : OTHER_LABEL;
+      const bucket = byLabel.get(label) ?? [];
+      bucket.push(v);
+      byLabel.set(label, bucket);
+    }
+
+    const order = [...GROUP_PREFIXES.map((p) => `${p}-*`), OTHER_LABEL];
+    return order
+      .filter((label) => byLabel.has(label))
+      .map((label) => {
+        const vars = byLabel.get(label)!;
+        return {
+          label,
+          vars,
+          modifiedCount: vars.filter((v) => v.modified).length
+        };
+      });
+  },
+  { name: "groups" }
+);
+
+export const modifiedCount = computed(() => [...colorVars.value.values()].filter((v) => v.modified).length, {
+  name: "modifiedCount"
 });
-
-export const modifiedCount = computed(() => [...colorVars.value.values()].filter((v) => v.modified).length);
+export const colorCount = computed(() => colorVars.value.size, { name: "colorCount" });
