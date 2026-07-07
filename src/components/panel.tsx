@@ -19,10 +19,10 @@ export function Panel() {
         class="pill"
         style={{ left: pos.x, top: pos.y }}
         onClick={() => (minimized.value = false)}
-        title="Expand cooolers"
+        title="Expand color lens"
       >
         <span class="pill-logo" />
-        cooolers
+        color lens
         {modifiedCount.value > 0 && <span class="pill-badge">{modifiedCount.value}</span>}
       </button>
     );
