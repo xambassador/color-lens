@@ -14,7 +14,7 @@ Drop one script tag in your page and start using it.
 
 That's it!
 
-## Features 
+## Features
 
 - **Zero install** - a single self-contained script (~23 KB gzipped)
 - **Fully isolated** - uses shadow DOM to prevent breaking application's style
