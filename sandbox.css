@@ -55,6 +55,14 @@
   --content-max-width: 960px;
 }
 
+.dark {
+  --accent: #5b87a6;
+  --accent-hover: #4f77f1;
+  --accent-dim: #5b87f54e;
+  --accent-glow: #f2a53a39;
+  --color-primary: #6366f2;
+}
+
 *,
 *::before,
 *::after {

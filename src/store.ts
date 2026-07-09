@@ -40,7 +40,18 @@ export function refreshColorVars() {
   const scanned = scanColorVars();
   const merged = new Map<string, CSSColorVar>();
   for (const [name, scannedVar] of scanned) {
-    merged.set(name, colorVars.value.get(name) ?? scannedVar);
+    const existing = colorVars.value.get(name);
+    merged.set(
+      name,
+      existing
+        ? {
+            ...existing,
+            variants: scannedVar.variants,
+            count: scannedVar.count,
+            activeVariant: scannedVar.activeVariant
+          }
+        : scannedVar
+    );
   }
   for (const [name, v] of colorVars.value) {
     if (v.modified && !merged.has(name)) merged.set(name, v);

@@ -1,23 +1,34 @@
 import type { CSSColorVar } from "./types";
 import { isColorValue } from "./utils";
 
-function collectFromRules(rules: CSSRuleList, out: Map<string, string>) {
+type Accumulator = Map<string, { values: string[]; count: number }>;
+
+function accumulateProp(out: Accumulator, prop: string, value: string) {
+  const entry = out.get(prop) ?? { values: [], count: 0 };
+  entry.count++;
+  if (value && !entry.values.includes(value)) entry.values.push(value);
+  out.set(prop, entry);
+}
+
+function collectFromRules(rules: CSSRuleList, out: Accumulator) {
   for (const rule of Array.from(rules)) {
     if (rule instanceof CSSStyleRule) {
       for (let i = 0; i < rule.style.length; i++) {
         const prop = rule.style[i];
-        if (prop.startsWith("--")) {
-          out.set(prop, rule.style.getPropertyValue(prop));
-        }
+        if (!prop.startsWith("--")) return;
+        accumulateProp(out, prop, rule.style.getPropertyValue(prop).trim());
       }
-    } else if ("cssRules" in rule) {
+      continue;
+    }
+
+    if ("cssRules" in rule) {
       collectFromRules((rule as CSSGroupingRule).cssRules, out);
     }
   }
 }
 
 export function scanColorVars(): Map<string, CSSColorVar> {
-  const declared = new Map<string, string>();
+  const declared: Accumulator = new Map();
 
   for (const sheet of Array.from(document.styleSheets)) {
     let rules: CSSRuleList;
@@ -30,26 +41,32 @@ export function scanColorVars(): Map<string, CSSColorVar> {
     collectFromRules(rules, declared);
   }
 
-  // Inline styles if contains any custom properties
   const inline = document.documentElement.style;
   for (let i = 0; i < inline.length; i++) {
     const prop = inline[i];
-    if (prop.startsWith("--")) {
-      declared.set(prop, inline.getPropertyValue(prop));
-    }
+    if (!prop.startsWith("--")) continue;
+    accumulateProp(declared, prop, inline.getPropertyValue(prop).trim());
   }
 
   const result = new Map<string, CSSColorVar>();
   const computed = getComputedStyle(document.documentElement);
 
-  for (const [name, raw] of declared) {
-    let value = raw.trim();
-    if (!isColorValue(value)) {
-      // value may refernce another variable
-      value = computed.getPropertyValue(name).trim();
-      if (!isColorValue(value)) continue;
-    }
-    result.set(name, { name, value, original: value, modified: false });
+  for (const [name, entry] of declared) {
+    const activeVariant = computed.getPropertyValue(name).trim();
+    if (!isColorValue(activeVariant)) continue;
+
+    const variants = entry.values.filter(isColorValue);
+    if (!variants.includes(activeVariant)) variants.push(activeVariant);
+
+    result.set(name, {
+      name,
+      value: activeVariant,
+      original: activeVariant,
+      modified: false,
+      variants,
+      count: entry.count,
+      activeVariant
+    });
   }
 
   return result;
