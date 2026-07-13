@@ -15,7 +15,7 @@ function collectFromRules(rules: CSSRuleList, out: Accumulator) {
     if (rule instanceof CSSStyleRule) {
       for (let i = 0; i < rule.style.length; i++) {
         const prop = rule.style[i];
-        if (!prop.startsWith("--")) return;
+        if (!prop.startsWith("--")) continue;
         accumulateProp(out, prop, rule.style.getPropertyValue(prop).trim());
       }
       continue;
