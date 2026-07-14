@@ -1,6 +1,7 @@
 import { h, render } from "preact";
 
 import { App } from "./components/app";
+import { ErrorBoundary } from "./components/error-boundary";
 import { panelOpen, resetAll } from "./store";
 
 import styles from "./styles/main.css?inline";
@@ -21,7 +22,7 @@ function init() {
 
   const root = document.createElement("div");
   shadow.appendChild(root);
-  render(h(App, null), root);
+  render(h(ErrorBoundary, { label: "Color Lens", children: h(App, null) }), root);
 
   window.__colorlens__ = {
     show: () => (panelOpen.value = true),

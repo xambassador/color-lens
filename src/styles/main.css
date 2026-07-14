@@ -548,3 +548,65 @@ hex-color-picker {
   border-top: 1px solid #23262e;
   color: #b6bcc8;
 }
+
+.error-boundary {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 24px 16px;
+  text-align: center;
+}
+
+.error-boundary-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  margin-bottom: 4px;
+  background: #581c1c;
+  color: #fca5a5;
+  font-weight: 700;
+  border-radius: 50%;
+}
+
+.error-boundary-title {
+  color: #e5e7eb;
+  font-weight: 700;
+}
+
+.error-boundary-message {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #565d6b;
+  font-size: 11px;
+}
+
+.error-boundary-hint {
+  max-width: 220px;
+  margin-top: 4px;
+  padding: 6px 8px;
+  color: #9ca3af;
+  font-size: 11px;
+  line-height: 1.5;
+  background: #1a1d23;
+  border: 1px solid #2c313c;
+  border-radius: 6px;
+}
+
+.error-boundary-retry {
+  margin-top: 6px;
+  padding: 3px 10px;
+  font-size: 11px;
+  color: #b6bcc8;
+  border: 1px solid #2c313c;
+  border-radius: 6px;
+}
+
+.error-boundary-retry:hover {
+  color: #e5e7eb;
+  background: #2c313c;
+}

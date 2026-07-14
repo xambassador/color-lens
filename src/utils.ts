@@ -6,6 +6,7 @@ import {
   formatRgb,
   modeHsl,
   modeHwb,
+  modeLab,
   modeLrgb,
   modeOklab,
   modeOklch,
@@ -24,6 +25,7 @@ useMode(modeRgb);
 useMode(modeLrgb);
 useMode(modeOklab);
 useMode(modeHsl);
+useMode(modeLab);
 const toOklch = useMode(modeOklch);
 const toHwb = useMode(modeHwb);
 

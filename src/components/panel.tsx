@@ -2,6 +2,7 @@ import { minimized, modifiedCount, panelOpen, panelPos, panelSize } from "../sto
 import { ColorList } from "./color-list";
 import { ColorPicker } from "./color-picker";
 import { ContrastChecker } from "./contrast-checker";
+import { ErrorBoundary } from "./error-boundary";
 import { PanelHeader } from "./panel-header";
 import { Resizer } from "./resizer";
 import { Toast } from "./toast";
@@ -33,7 +34,9 @@ export function Panel() {
       <PanelHeader />
       <Toolbar />
       <div class="panel-body">
-        <ContrastChecker />
+        <ErrorBoundary label="Contrast checker" hint={hint}>
+          <ContrastChecker />
+        </ErrorBoundary>
         <ColorList />
       </div>
       <Resizer />
@@ -42,3 +45,6 @@ export function Panel() {
     </div>
   );
 }
+
+const hint =
+  "If one of your colors uses a format like lch() or color(display-p3 ...) that isn't shown in the panel, that's likely why - try switching it to rgb, hsl, oklch, oklab, lab, or hwb.";
